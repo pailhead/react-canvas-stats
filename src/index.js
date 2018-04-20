@@ -70,7 +70,6 @@ export default class ReactStats extends React.Component {
         const { mode } = this.state
         return (
             <div onClick={this.onClick} style={{ cursor: 'pointer' }}>
-                This is so Fancy!
                 <ReactPanel
                     active={mode === 0}
                     name="FPS"
