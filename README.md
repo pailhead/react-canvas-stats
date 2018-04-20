@@ -37,3 +37,8 @@ class Foo extends Component {
 
 ```
 
+### TODO ###
+
+- proptypes
+- custom panel
+- clean dependencies
