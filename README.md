@@ -1,51 +1,39 @@
 stats.js
 ========
 
-#### JavaScript Performance Monitor ####
+#### React version of stats.js ####
 
-This class provides a simple info box that will help you monitor your code performance.
-
-* **FPS** Frames rendered in the last second. The higher the number the better.
-* **MS** Milliseconds needed to render a frame. The lower the number the better.
-* **MB** MBytes of allocated memory. (Run Chrome with `--enable-precise-memory-info`)
-* **CUSTOM** User-defined panel support.
-
-
-### Screenshots ###
-
-![fps.png](https://raw.githubusercontent.com/mrdoob/stats.js/master/files/fps.png)
-![ms.png](https://raw.githubusercontent.com/mrdoob/stats.js/master/files/ms.png)
-![mb.png](https://raw.githubusercontent.com/mrdoob/stats.js/master/files/mb.png)
-![custom.png](https://raw.githubusercontent.com/mrdoob/stats.js/master/files/custom.png)
-
+Please see [the original](https://github.com/mrdoob/stats.js) for a better idea of what this does. There's another react version of this but it hasn't been updated in a long time and renders this with the dom. 
 
 ### Usage ###
 
+Only the `MS` and `FPS` panels are available.
+
+Pass a timestamp prop to the component when update needs to occur.
+
+
 ```javascript
-var stats = new Stats();
-stats.showPanel( 1 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild( stats.dom );
 
-function animate() {
 
-	stats.begin();
+import Stats from 'react-canvas-stats'
 
-	// monitored code goes here
 
-	stats.end();
+class Foo extends Component {
 
-	requestAnimationFrame( animate );
+	state={ timestamp: null }
+	
+	onSomeUpdate = ()=>{
+		this.setState({timestamp: Date.now()})
+	}
 
+	render(){
+		<div>
+			<Stats
+				timestamp={this.state.timestamp}
+			/>
+		</div>
+	}
 }
 
-requestAnimationFrame( animate );
 ```
 
-
-### Bookmarklet ###
-
-You can add this code to any page using the following bookmarklet:
-
-```javascript
-javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()
-```

@@ -1,19 +1,18 @@
 {
-  "name": "stats.js",
-  "version": "0.17.0",
+  "name": "react-canvas-stats",
+  "version": "0.0.1",
   "description": "JavaScript Performance Monitor",
-  "main": "build/stats.js",
-  "repository": "mrdoob/stats.js",
-  "directories": {
-    "example": "examples"
-  },
+  "main": "build/index.js",
+  "repository": "pailhead/stats.js",
   "files": [
     "build",
     "src"
   ],
   "scripts": {
+    "start": "webpack --watch",
+    "build-react": "webpack",
     "build": "rollup -c",
-    "build-uglify": "rollup -c && uglifyjs build/stats.js -cm --preamble \"// stats.js - http://github.com/mrdoob/stats.js\" > build/stats.min.js",
+    "build-uglify": "rollup -c && uglifyjs build/stats.js -cm --preamble \"// stats.js - http://github.com/pailhead/stats.js\" > build/stats.min.js",
     "build-closure": "rollup -c && java -jar utils/compiler/closure-compiler-v20160713.jar --language_in=ECMASCRIPT5_STRICT --js build/stats.js --js_output_file build/stats.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,14 +21,27 @@
     "fps",
     "stats"
   ],
-  "author": "mrdoob",
+  "author": "pailhead",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mrdoob/stats.js/issues"
+    "url": "https://github.com/pailhead/stats.js/issues"
   },
-  "homepage": "https://github.com/mrdoob/stats.js",
+  "homepage": "https://github.com/pailhead/stats.js",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "rollup": "^0.36.0",
-    "uglifyjs": "^2.4.10"
+    "uglifyjs": "^2.4.10",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14"
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "react": "^16.3.2"
   }
 }
