@@ -7,6 +7,8 @@ Please see [the original](https://github.com/mrdoob/stats.js) for a better idea 
 
 ### Usage ###
 
+[![NPM](https://nodei.co/npm/react-canvas-stats.png)](https://npmjs.org/package/react-canvas-stats)
+
 Only the `MS` and `FPS` panels are available.
 
 Pass a timestamp prop to the component when update needs to occur.
