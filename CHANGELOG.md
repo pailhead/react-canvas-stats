@@ -1,4 +1,6 @@
 ## [Unreleased]
+- Added `prop-types`
+- Refactored and cleaned `Stats.js` 
 
 ## [0.0.6] - 2018-04-20
 ### Added

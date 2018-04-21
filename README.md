@@ -50,6 +50,5 @@ The `react` side of things is relying heavily on timestamps. It feels kinda weir
 
 ### TODO ###
 
-- proptypes
 - custom panel
 - clean dependencies
