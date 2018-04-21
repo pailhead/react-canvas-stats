@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.1.1] - 2017-04-20
+### Changed
+- Proper build
+
 ## [0.1.0] - 2017-04-20
 ### Added
 - Added `prop-types`
