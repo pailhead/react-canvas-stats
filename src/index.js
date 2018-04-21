@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import Stats from './Stats'
 import Panel from './Panel'
 
@@ -34,11 +36,22 @@ class ReactPanel extends React.Component {
     }
 }
 
+ReactPanel.propTypes = {
+    name: PropTypes.string.isRequired,
+    fg: PropTypes.string.isRequired,
+    bg: PropTypes.string.isRequired,
+    active: PropTypes.bool,
+    timestamp: PropTypes.number,
+    value: PropTypes.number
+}
+
 export default class ReactStats extends React.Component {
     state = {
         mode: 0,
         ms: null,
-        fps: null
+        msTimestamp: null,
+        fps: null,
+        fpsTimestamp: null
     }
 
     componentDidMount() {
@@ -92,5 +105,6 @@ export default class ReactStats extends React.Component {
     }
 }
 
-// this.fpsPanel = new Panel('FPS', '#0ff', '#002')
-// this.msPanel = new Panel('MS', '#0f0', '#020')
+ReactStats.propTypes = {
+    timestamp: PropTypes.number.isRequired
+}

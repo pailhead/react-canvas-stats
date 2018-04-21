@@ -10,7 +10,7 @@ module.exports = {
     },
     parser: 'babel-eslint',
     env: {
-        // node: true,
+        node: true,
         es6: true,
         browser: true,
     },
