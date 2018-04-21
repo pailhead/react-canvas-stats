@@ -1,5 +1,6 @@
 import React from 'react'
-import Stats, { Panel } from './Stats'
+import Stats from './Stats'
+import Panel from './Panel'
 
 class ReactPanel extends React.Component {
     _setCanvas = ref => {
