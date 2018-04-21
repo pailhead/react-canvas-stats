@@ -1,19 +1,18 @@
 {
-	"name": "stats.js",
-	"homepage": "https://github.com/mrdoob/stats.js",
+	"name": "react-canvas-stats",
+	"homepage": "https://github.com/pailhead/stats.js",
 	"description": "JavaScript Performance Monitor",
-	"main": "build/stats.js",
+	"main": "build/index.js",
 	"keywords": [
 		"stats",
 		"statistics",
 		"performance",
 		"monitor",
-		"fps"
+		"fps",
+		"react"
 	],
 	"license": "MIT",
 	"ignore": [
-		"examples",
-		"utils",
 		"LICENSE"
 	]
 }
