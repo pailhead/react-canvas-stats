@@ -38,6 +38,15 @@ class Foo extends Component {
 }
 
 ```
+### NOTES ###
+
+`Stats.js` has been refactored. The idea is to have it not coupled with the dom, nor the panel instances for that matter. It's responsibilities should be:
+- Figure out which `now()` is available.
+- Compute miliseconds
+- Compute frame rate.
+- (memory has been nuked)
+
+The `react` side of things is relying heavily on timestamps. It feels kinda weird but it works. This seems to be an obvious way to trigger a change. For the main component, only the stamp of the last update is needed. The panel's seemed to each need their own, since the numbers could be the same (60fps over and over again) and it seemed like this change wouldn't register. Hence both the value prop, and the time of last update. 
 
 ### TODO ###
 
