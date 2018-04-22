@@ -25,7 +25,7 @@ export default class ReactPanel extends React.Component {
         return (
             <div
                 style={{
-                    display: this.props.active ? 'block' : 'none'
+                    display: this.props.active ? 'inline-block' : 'none'
                 }}
             >
                 <canvas ref={this._setCanvas} />

@@ -38,7 +38,7 @@ export default class Panel {
         this.GRAPH_HEIGHT = 30 * PR
         canvas.width = this.WIDTH
         canvas.height = this.HEIGHT
-        canvas.style.cssText = 'width:80px;height:48px'
+        canvas.style.cssText = 'width:80px;height:48px;display:inline-block'
         this.canvas = canvas
         const context = canvas.getContext('2d')
         context.font = `bold ${9 * PR}px Helvetica,Arial,sans-serif`
