@@ -50,5 +50,4 @@ The `react` side of things is relying heavily on timestamps. It feels kinda weir
 
 ### TODO ###
 
-- custom panel
-- clean dependencies
+- research how to publish this. I don't understand how it should be bundled for npm. 
