@@ -38,39 +38,107 @@ class ReactPanel extends React.Component {
 
 ReactPanel.propTypes = {
     name: PropTypes.string.isRequired,
-    fg: PropTypes.string.isRequired,
-    bg: PropTypes.string.isRequired,
+    fg: PropTypes.string,
+    bg: PropTypes.string,
     active: PropTypes.bool,
     timestamp: PropTypes.number,
     value: PropTypes.number
 }
 
+const FPS = 'fps'
+const MS = 'ms'
+
+const DEFAULT_PANELS = [
+    {
+        name: 'FPS',
+        fg: '#0ff',
+        bg: '#002',
+        updateOnType: FPS
+    },
+    {
+        name: 'MS',
+        fg: '#0f0',
+        bg: '#020',
+        updateOnType: MS
+    }
+]
+
+function getKeyValue(name) {
+    return `${name}_val`
+}
+
+function getKeyTimestamp(name) {
+    return `${name}_timestamp`
+}
+
 export default class ReactStats extends React.Component {
     state = {
         mode: 0,
-        ms: null,
-        msTimestamp: null,
-        fps: null,
-        fpsTimestamp: null
+        panels: []
+    }
+
+    constructor(props) {
+        super(props)
+
+        this._callbacks = {
+            [FPS]: {},
+            [MS]: {}
+        }
+    }
+
+    _initPanel = panel => {
+        const { name, updateOnType } = panel
+        const pn = getKeyValue(name)
+        const ts = getKeyTimestamp(name)
+        const updateType = updateOnType === MS ? MS : FPS
+
+        this.setState({
+            [pn]: null,
+            [ts]: null
+        })
+
+        this._callbacks[updateType][name] = val => {
+            this.setState({
+                [pn]: val,
+                [ts]: Date.now()
+            })
+        }
     }
 
     componentDidMount() {
+        const { extraPanels } = this.props
+
+        let panels = [...DEFAULT_PANELS]
+
+        if (extraPanels) {
+            panels = panels.concat(extraPanels)
+        }
+
+        panels.forEach(this._initPanel)
+
+        this.setState({ panels })
+
         this.stats = new Stats({
-            onMSComputed: this.onMSComputed,
-            onFpsComputed: this.onFpsComputed
+            onMSComputed: this._onMSComputed,
+            onFpsComputed: this._onFpsComputed
         })
     }
 
-    onMSComputed = ms => {
-        this.setState({ ms, msTimestamp: Date.now() })
+    _onMSComputed = ms => {
+        Object.keys(this._callbacks[MS]).forEach(key =>
+            this._callbacks[MS][key](ms)
+        )
     }
 
-    onFpsComputed = fps => {
-        this.setState({ fps, fpsTimestamp: Date.now() })
+    _onFpsComputed = fps => {
+        Object.keys(this._callbacks[FPS]).forEach(key =>
+            this._callbacks[FPS][key](fps)
+        )
     }
 
     onClick = () => {
-        const mode = ++this.state.mode % 2
+        const mode = ++this.state.mode % this.state.panels.length
+
         this.setState({ mode })
     }
 
@@ -80,31 +148,42 @@ export default class ReactStats extends React.Component {
         }
     }
 
+    _renderPanel = (panel, panelIndex) => {
+        const { state: { mode }, state } = this
+        const { name, fg, bg } = panel
+
+        return (
+            <ReactPanel
+                key={panelIndex}
+                active={mode === panelIndex}
+                name={name}
+                fg={fg}
+                bg={bg}
+                value={state[getKeyValue(name)]}
+                timestamp={state[getKeyTimestamp(name)]}
+            />
+        )
+    }
+
     render() {
-        const { mode } = this.state
+        const { panels } = this.state
+
         return (
             <div onClick={this.onClick} style={{ cursor: 'pointer' }}>
-                <ReactPanel
-                    active={mode === 0}
-                    name="FPS"
-                    fg="#0ff"
-                    bg="#002"
-                    value={this.state.fps}
-                    timestamp={this.state.fpsTimestamp}
-                />
-                <ReactPanel
-                    active={mode === 1}
-                    name="MS"
-                    fg="#0f0"
-                    bg="#020"
-                    value={this.state.ms}
-                    timestamp={this.state.msTimestamp}
-                />
+                {panels.map(this._renderPanel)}
             </div>
         )
     }
 }
 
 ReactStats.propTypes = {
-    timestamp: PropTypes.number.isRequired
+    timestamp: PropTypes.number.isRequired,
+    extraPanels: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string.isRequired,
+            fg: PropTypes.string,
+            bg: PropTypes.string,
+            updateOnType: PropTypes.string
+        })
+    )
 }

@@ -12,9 +12,11 @@
  * known issues:
  *    - https://github.com/mrdoob/stats.js/issues
  */
+const DEFAULT_FG = '#0ff'
+const DEFAULT_BG = '#002'
 
 export default class Panel {
-    constructor(canvas, name, fg, bg) {
+    constructor(canvas, name, fg = DEFAULT_FG, bg = DEFAULT_BG) {
         this.fg = fg
         this.bg = bg
         this.name = name
