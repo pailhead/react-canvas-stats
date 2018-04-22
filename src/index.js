@@ -53,10 +53,21 @@ export default class ReactStats extends React.Component {
 
     _initPanel = panel => {
         const { name, updateOnType, updateCallback, maxValue } = panel
+        const { fpsMax, msMax } = this.props
         const pn = getKeyValue(name)
         const pm = getKeyMaxValue(name)
         const ts = getKeyTimestamp(name)
         const updateType = updateOnType === MS ? MS : FPS
+
+        let _maxValue
+
+        if (name === 'FPS' && fpsMax) {
+            _maxValue = fpsMax
+        } else if (name === 'MS' && msMax) {
+            _maxValue = msMax
+        } else {
+            _maxValue = maxValue
+        }
 
         this.setState({
             [pn]: null,
@@ -150,6 +161,10 @@ export default class ReactStats extends React.Component {
 /**
   timestamp - triggers updates, pass a Date.now() when you would call update() in the original
   
+  fpsMax - override default max of 60 (optional)
+
+  msMax - override default max of 200 (optional)
+
   extraPanels - an object that defines a panel with the shape of:
     name - name of the panel
     fg - foreground color (optional)
@@ -162,6 +177,8 @@ export default class ReactStats extends React.Component {
  */
 ReactStats.propTypes = {
     timestamp: PropTypes.number.isRequired,
+    fpsMax: PropTypes.number,
+    msMax: PropTypes.number,
     extraPanels: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,

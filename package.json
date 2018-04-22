@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "start": "cross-env webpack --mode development --watch",
-    "build": "webpack --mode production"
+    "build": "webpack --mode development"
   },
   "keywords": [
     "performance",
