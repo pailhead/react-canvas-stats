@@ -1,5 +1,15 @@
 ## [Unreleased]
 
+## [0.1.2] - 2017-04-21
+### Changed
+- Component maps panels in render()
+- Moved `ReactPanel` to `ReactPanel.js`
+
+### Added
+- Component accepts `extraPanels` prop from outside
+- Example from react-create-app (?) that can't run but illustrates how to add the memory panel
+
+
 ## [0.1.1] - 2017-04-20
 ### Changed
 - Proper build

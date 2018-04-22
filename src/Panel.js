@@ -111,5 +111,6 @@ export default class Panel {
             this.PR,
             this.round((1 - value / maxValue) * this.GRAPH_HEIGHT)
         )
+        console.log(1 - value / maxValue,  this.GRAPH_HEIGHT)
     }
 }

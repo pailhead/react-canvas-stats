@@ -1,49 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import ReactPanel from './ReactPanel'
 import Stats from './Stats'
-import Panel from './Panel'
-
-class ReactPanel extends React.Component {
-    _setCanvas = ref => {
-        this._canvas = ref
-        if (this._canvas) {
-            this._panel = new Panel(
-                this._canvas,
-                this.props.name,
-                this.props.fg,
-                this.props.bg
-            )
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.timestamp !== prevProps.timestamp) {
-            this._panel.update(this.props.value, this.props.maxValue)
-        }
-    }
-
-    render() {
-        return (
-            <div
-                style={{
-                    display: this.props.active ? 'inline-block' : 'none'
-                }}
-            >
-                <canvas ref={this._setCanvas} />
-            </div>
-        )
-    }
-}
-
-ReactPanel.propTypes = {
-    name: PropTypes.string.isRequired,
-    fg: PropTypes.string,
-    bg: PropTypes.string,
-    active: PropTypes.bool,
-    timestamp: PropTypes.number,
-    value: PropTypes.number
-}
 
 const FPS = 'fps'
 const MS = 'ms'
@@ -53,18 +12,24 @@ const DEFAULT_PANELS = [
         name: 'FPS',
         fg: '#0ff',
         bg: '#002',
-        updateOnType: FPS
+        updateOnType: FPS,
+        maxValue: 60
     },
     {
         name: 'MS',
         fg: '#0f0',
         bg: '#020',
-        updateOnType: MS
+        updateOnType: MS,
+        maxValue: 200
     }
 ]
 
 function getKeyValue(name) {
     return `${name}_val`
+}
+
+function getKeyMaxValue(name) {
+    return `${name}_MaxVal`
 }
 
 function getKeyTimestamp(name) {
@@ -87,19 +52,25 @@ export default class ReactStats extends React.Component {
     }
 
     _initPanel = panel => {
-        const { name, updateOnType } = panel
+        const { name, updateOnType, updateCallback, maxValue } = panel
         const pn = getKeyValue(name)
+        const pm = getKeyMaxValue(name)
         const ts = getKeyTimestamp(name)
         const updateType = updateOnType === MS ? MS : FPS
 
         this.setState({
             [pn]: null,
+            [pm]: maxValue,
             [ts]: null
         })
 
         this._callbacks[updateType][name] = val => {
+            let _val = val
+            if (updateCallback) {
+                _val = updateCallback(val)
+            }
             this.setState({
-                [pn]: val,
+                [pn]: _val,
                 [ts]: Date.now()
             })
         }
@@ -160,6 +131,7 @@ export default class ReactStats extends React.Component {
                 fg={fg}
                 bg={bg}
                 value={state[getKeyValue(name)]}
+                maxValue={state[getKeyMaxValue(name)]}
                 timestamp={state[getKeyTimestamp(name)]}
             />
         )
@@ -175,7 +147,19 @@ export default class ReactStats extends React.Component {
         )
     }
 }
+/**
+  timestamp - triggers updates, pass a Date.now() when you would call update() in the original
+  
+  extraPanels - an object that defines a panel with the shape of:
+    name - name of the panel
+    fg - foreground color (optional)
+    bg - background color (optional)
+    maxValue - scale of the chart 
+    updateOnType - stats has two events, when miliseconds are computed, and when fps is aggregated and computed ('fps' || 'ms' )
+    updateCallback - a function that takes the value (ms || fps) as an argument and returns the new value that you compute
 
+    TODO: ^ add this to docs
+ */
 ReactStats.propTypes = {
     timestamp: PropTypes.number.isRequired,
     extraPanels: PropTypes.arrayOf(
@@ -183,7 +167,9 @@ ReactStats.propTypes = {
             name: PropTypes.string.isRequired,
             fg: PropTypes.string,
             bg: PropTypes.string,
-            updateOnType: PropTypes.string
+            maxValue: PropTypes.number.isRequired,
+            updateOnType: PropTypes.string,
+            updateCallback: PropTypes.func.isRequired
         })
     )
 }
