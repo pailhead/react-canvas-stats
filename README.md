@@ -51,3 +51,4 @@ The `react` side of things is relying heavily on timestamps. It feels kinda weir
 ### TODO ###
 
 - research how to publish this. I don't understand how it should be bundled for npm. 
+- dont create functions in the callbacks, and avoid `Object.keys`
