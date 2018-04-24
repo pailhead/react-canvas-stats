@@ -46,8 +46,8 @@ export default class ReactStats extends React.Component {
         super(props)
 
         this._callbacks = {
-            [FPS]: {},
-            [MS]: {}
+            [FPS]: [],
+            [MS]: []
         }
     }
 
@@ -75,7 +75,7 @@ export default class ReactStats extends React.Component {
             [ts]: null
         })
 
-        this._callbacks[updateType][name] = val => {
+        this._callbacks[updateType].push(val => {
             let _val = val
             if (updateCallback) {
                 _val = updateCallback(val)
@@ -84,7 +84,7 @@ export default class ReactStats extends React.Component {
                 [pn]: _val,
                 [ts]: Date.now()
             })
-        }
+        })
     }
 
     componentDidMount() {
@@ -107,15 +107,15 @@ export default class ReactStats extends React.Component {
     }
 
     _onMSComputed = ms => {
-        Object.keys(this._callbacks[MS]).forEach(key =>
-            this._callbacks[MS][key](ms)
-        )
+        for (let i = 0; i < this._callbacks[MS].length; i++) {
+            this._callbacks[MS][i](ms)
+        }
     }
 
     _onFpsComputed = fps => {
-        Object.keys(this._callbacks[FPS]).forEach(key =>
-            this._callbacks[FPS][key](fps)
-        )
+        for (let i = 0; i < this._callbacks[FPS].length; i++) {
+            this._callbacks[FPS][i](fps)
+        }
     }
 
     onClick = () => {
