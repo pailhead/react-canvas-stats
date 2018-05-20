@@ -1,4 +1,4 @@
-stats.js
+react-canvas-stats
 ========
 
 #### React version of stats.js ####
