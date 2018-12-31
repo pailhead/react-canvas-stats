@@ -19,12 +19,14 @@
  * known issues:
  *    - https://github.com/mrdoob/stats.js/issues
  */
+import root from 'window-or-global'
 
 export default class Stats {
     constructor({ onFpsComputed, onMSComputed }) {
+        
         this.now =
-            window.performance && window.performance.now
-                ? window.performance.now.bind(window.performance)
+            root.performance && root.performance.now
+                ? root.performance.now.bind(root.performance)
                 : Date.now.bind(Date)
 
         this.beginTime = this.now()

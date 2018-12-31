@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "start": "cross-env webpack --mode development --watch",
-    "build": "webpack --mode development"
+    "build": "webpack"
   },
   "keywords": [
     "performance",
@@ -40,6 +40,10 @@
     "react": "^16.3.2",
     "prop-types": "^15.6.1",
     "webpack": "^4.6.0",
+    "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^2.0.14"
+  },
+  "dependencies": {
+    "window-or-global": "^1.0.1"
   }
 }

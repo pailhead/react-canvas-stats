@@ -1,11 +1,13 @@
 const path = require('path')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'index.js',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
+        globalObject: 'typeof self !== \'undefined\' ? self : this',
     },
     module: {
         rules: [
@@ -20,12 +22,9 @@ module.exports = {
         ]
     },
     externals: {
-        react: {
-            root: 'React',
-            'commonjs-module': 'react',
-            commonjs2: 'react',
-            commonjs: 'react',
-            amd: 'react'
-        }
-    }
+      'react': 'commonjs react',
+    },
+    plugins:[
+        new BundleAnalyzerPlugin()
+    ]
 }

@@ -12,6 +12,9 @@
  * known issues:
  *    - https://github.com/mrdoob/stats.js/issues
  */
+
+import root from 'window-or-global'
+
 const DEFAULT_FG = '#0ff'
 const DEFAULT_BG = '#002'
 
@@ -24,8 +27,9 @@ export default class Panel {
         this.min = Infinity
         this.max = 0
         this.round = Math.round
-
-        const PR = this.round(window.devicePixelRatio || 1)
+        
+        const PR = this.round(root.devicePixelRatio || 1) 
+        
         this.PR = PR
 
         this.WIDTH = 80 * PR
