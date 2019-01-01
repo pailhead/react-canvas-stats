@@ -70,5 +70,5 @@ The `react` side of things is relying heavily on timestamps. It feels kinda weir
 
 ### TODO ###
 
-- research how to publish this. I don't understand how it should be bundled for npm. 
+- ~research how to publish this. I don't understand how it should be bundled for npm.~ It might actually be properly bundled now. Not sure what to do about `PropTypes`. 
 
