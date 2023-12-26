@@ -24,8 +24,8 @@
     "url": "https://github.com/pailhead/stats.js/issues"
   },
   "homepage": "https://github.com/pailhead/stats.js",
-  "peerDependencies": {
-    "react": "^16.3.2"
+  "peerDependencies": { 
+    "react": ">=16.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
